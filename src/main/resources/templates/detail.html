@@ -17,11 +17,11 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#"></i>Home</a>
+                <a class="nav-link active" aria-current="page" href="/"></i>Home</a>
               </li>
               
               <li class="nav-item">
-                <a class="nav-link" href="#">Product</a>
+                <a class="nav-link" href="/">Product</a>
               </li>
             </ul>
             <ul class="d-flex">
@@ -42,7 +42,7 @@
           <img th:src="@{${product.getUrlImage}}" class="" alt="..." style="width: 100%;">
         </div>
         <div class="col-5">
-          <div class="card" style="width: 100%;">
+          <div class="" style="width: 100%;">
             <div class="card-body">
               <h3 th:text="${product.getName}"></h3>
               <h4 id="harga" class="card-title fw-bold" th:text="'Rp' +${product.getPrice}"></h4>
@@ -97,6 +97,7 @@
       const id = [[${product.getId}]]
       const nama = [[${product.getName}]]
       const harga = [[${product.getPrice}]]
+      const image = [[${product.getUrlImage}]]
       const jumlah = +$("#jumlah").val()
       if (cart.find(e2=>e2.id == id)) {
         cart = cart.filter(e2=> e2.id != id)
@@ -105,6 +106,7 @@
         id,
         nama,
         harga,
+        image,
         quantity: jumlah,
       })
       localStorage.setItem("cart", JSON.stringify(cart))

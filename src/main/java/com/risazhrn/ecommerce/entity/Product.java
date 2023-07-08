@@ -1,6 +1,8 @@
 package com.risazhrn.ecommerce.entity;
 
 import java.io.Serializable;
+import java.util.Set;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -19,28 +21,26 @@ public class Product implements Serializable {
 
     private double price;
     private int stock;
-    private String url_image;
 
-    public Product(int id, String name, String description, double price, int stock, String url_image) {
-        this.id = id;
+    @Column(name="url_image")
+    private String urlImage;
+
+    @OneToMany(mappedBy = "product")
+    Set<ProductTransaction> transactions;
+
+    public Product(String name, String description, double price, int stock, String urlImage) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.stock = stock;
-        this.url_image = url_image;
+        this.urlImage = urlImage;
     }
 
-    
     public Product() {
     }
 
-
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -76,15 +76,11 @@ public class Product implements Serializable {
     }
 
     public String getUrlImage() {
-        return url_image;
+        return urlImage;
     }
 
-    public void setUrlImage(String url_image) {
-        this.url_image = url_image;
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
     }
-
     
-    
-
-
 }
