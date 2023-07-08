@@ -23,6 +23,7 @@
           <li class="nav-item">
             <a class="nav-link" th:href="@{/}">Product</a>
           </li>
+
           <li class="nav-item">
             <a class="nav-link" th:href="@{/transaksi}">Riwayat Transaksi</a>
           </li>
@@ -38,49 +39,31 @@
   </nav>
 
     <div class="container">
-      <div class="d-flex p-5 gap-5">
-        <a th:href="@{'/detail/'+${product.getId}}" th:each="product : ${products}">
-          <div class="card" style="width: 18rem;">
-            <img th:src="@{${product.getUrlImage}}" class="card-img-top" alt="...">
-            <div class="card-body">
-            <h6 class="card-text nama" th:text="${product.getName}"></h6>
-            <h4 class="card-title fw-bold harga" th:text="'Rp' +${product.getPrice}"></h4>
-            <div class="mt-4 my-2">
-              <a href="#" class="btn btn-primary d-block py-2 px-4 btnAddCart" th:data-id="${product.getId}"><i class="fa fa-cart-shopping"></i> Add to Cart</a>
-            </div>
-            </div>
-          </div>
-        </a>
-      </div>
+      <h3 class="my-5">Riwayat Transaksi</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Tanggal</th>
+            <th scope="col">Total</th>
+            <th scope="col">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="transaction : ${transactions}">
+            <th scope="row" th:text="${transaction.getId}"></th>
+            <td th:text="${transaction.getCreatedAt}"></td>
+            <td th:text="${transaction.getTotal}"></td>
+            <td>
+              <a th:href="@{'/detailTransaksi/'+${transaction.getId}}" class="btn btn-success">Detail</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
     </div>
     <script src="/webjars/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" type="text/javascript"></script>
-    <script th:inline="javascript">
-    let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')): []
-    $(".btnAddCart").click((e) => {
-      $.ajax('/api/product/'+$(e.currentTarget).data('id'))
-      .done((data) => {
-        const id = data.id
-        const nama = data.name
-        const harga = data.price
-        const image = data.urlImage
-        const stock = data.stock
-        if (cart.find(e2=>e2.id == id)) {
-          cart = cart.filter(e2=> e2.id != id)
-        }
-        cart.push({
-          id,
-          nama,
-          harga,
-          image,
-          stock,
-          quantity: 1,
-        })
-        localStorage.setItem("cart", JSON.stringify(cart))
-        alert('Produk berhasil ditambahkan ke keranjang')
-      })
-      .fail((err) => {console.log(err)})
-    })
-    </script>
+    
  </body>
 </html>

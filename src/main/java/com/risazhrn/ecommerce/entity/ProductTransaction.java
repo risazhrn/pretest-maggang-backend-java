@@ -26,6 +26,9 @@ public class ProductTransaction implements Serializable {
         this.quantity = quantity;
     }
 
+    public ProductTransaction() {
+    }
+
     public int getId() {
         return id;
     }

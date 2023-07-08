@@ -26,6 +26,9 @@ public class Transaction implements Serializable {
         this.createdAt = createdAt;
     }
 
+    public Transaction() {
+    }
+
     public int getId() {
         return id;
     }

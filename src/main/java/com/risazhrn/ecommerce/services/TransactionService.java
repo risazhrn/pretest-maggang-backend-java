@@ -17,4 +17,13 @@ public class TransactionService {
     public Transaction save(Transaction transaction) {
         return transactionRepo.save(transaction);
     }
+
+    public Iterable<Transaction> findAll(){
+        return transactionRepo.findAll();
+    }
+
+    public Transaction findById(int id){
+        return transactionRepo.findById(id).get();
+    }
+
 }

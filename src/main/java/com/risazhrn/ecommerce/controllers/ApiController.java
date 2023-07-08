@@ -43,7 +43,7 @@ public class ApiController {
 
         for(DataBarang dataBarang : requestData.getDataBarang()) {
             Product product = productService.findOne(dataBarang.getId());
-            ProductTransaction pt = productTransactionService.save(new ProductTransaction(transaction, product, dataBarang.getQuantity()));
+            productTransactionService.save(new ProductTransaction(transaction, product, dataBarang.getQuantity()));
         }
 
         return transaction;

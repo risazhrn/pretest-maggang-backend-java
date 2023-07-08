@@ -5,23 +5,39 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import com.risazhrn.ecommerce.entity.Product;
+import com.risazhrn.ecommerce.entity.ProductTransaction;
 import com.risazhrn.ecommerce.services.ProductService;
+import com.risazhrn.ecommerce.services.ProductTransactionService;
+import com.risazhrn.ecommerce.services.TransactionService;
 
 @Controller
 public class HomeController{
-    // @Autowired
-    // private ProductService productService;
+    @Autowired
+    private ProductService productService;
 
-    // @GetMapping("/")
-    // public String a(Model model){
-    //     String message = "Hai Risa!";
-    //     model.addAttribute("msg", message);
-    //     model.addAttribute("products", productService.findAll());
-    //     return "index";
-    // }
+    @Autowired
+    private TransactionService transactionService;
+
+    @Autowired
+    private ProductTransactionService productTransactionService;
+
+
+    @GetMapping("/transaksi")
+    public String transaksi(Model model) {
+        model.addAttribute("transactions", transactionService.findAll());
+        return "riwayatTransaksi";
+    }
+
+    @GetMapping("/detailTransaksi/{id}")
+    public String detail(@PathVariable("id") int id,  Model model){
+        model.addAttribute("products", transactionService.findById(id).getProducts());
+        // for (ProductTransaction p: transactionService.findById(id).getProducts()) {
+        //     System.out.println(p.getProduct().getName());
+        // }
+        return "detailTransaksi";
+    }
 
     // @GetMapping("/add")
     // public String add(Model model){
