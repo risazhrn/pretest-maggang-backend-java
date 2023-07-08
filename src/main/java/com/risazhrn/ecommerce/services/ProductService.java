@@ -1,7 +1,5 @@
 package com.risazhrn.ecommerce.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +19,8 @@ public class ProductService {
         return productRepo.save(product);
     }
 
-    public Optional<Product> findOne(int id){
-        return productRepo.findById(id);
+    public Product findOne(int id){
+        return productRepo.findById(id).get();
     }
 
     public Iterable<Product> findAll(){
