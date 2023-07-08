@@ -50,3 +50,9 @@ terkait design system Toko, Barang, Pembelian pada ecommerse tersebut.
 ![Alt text](image.png)
 
 Aplikasi yang saya buat terdiri dari 3 tabel. 2 tabel utama yaitu product dan transaction dan satu tabel relasi yaitu product_transaction. Ketika produk ditambahkan kedalam keranjang, sistem akan menyimpan kedalam local storage menggunakan JavaScript. Dan ketika user ingin melakukan checkout atau transaksi, data akan disimpan kedalam tabel transaction dan product_transaction. Alasan saya menggunakan local storage sebagai tempat penyimpanan produk kedalam cart agar client-side processing bekerja lebih cepat dibanding harus mengambil dari database.   
+
+![Alt text](image-1.png)
+
+![Alt text](image-2.png)
+
+![Alt text](image-3.png)
