@@ -15,12 +15,14 @@ public class Transaction implements Serializable {
 
     @OneToMany(mappedBy = "transaction")
     private Set<ProductTransaction> products;
+    
+    private int total;
 
     @Column(name="created_at")
     private LocalDateTime createdAt;
 
-    public Transaction(Set<ProductTransaction> products, LocalDateTime createdAt) {
-        this.products = products;
+    public Transaction(int total, LocalDateTime createdAt) {
+        this.total = total;
         this.createdAt = createdAt;
     }
 
@@ -42,6 +44,14 @@ public class Transaction implements Serializable {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 
 }

@@ -8,31 +8,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid px-5 py-2">
-          <a class="navbar-brand" href="#">Olshop</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/"></i>Home</a>
-              </li>
-              
-              <li class="nav-item">
-                <a class="nav-link" href="/">Product</a>
-              </li>
-            </ul>
-            <ul class="d-flex">
-              <a class="nav-link" href="#">
-              <i class="fa fa-cart-shopping"></i>
-              Keranjang
-            </a>
-            </ul>
-          </div>
-        </div>
-      </nav>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid px-5 py-2">
+      <a class="navbar-brand" th:href="@{/}">Olshop</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/}"></i>Home</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/}">Product</a>
+          </li>
+        </ul>
+        <ul class="d-flex">
+          <a class="nav-link" th:href="@{/cart}">
+          <i class="fa fa-cart-shopping"></i>
+          Keranjang
+        </a>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
     <div class="container">
       <h2 class="my-4 fw-bold">Detail Produk</h2>
@@ -98,6 +98,7 @@
       const nama = [[${product.getName}]]
       const harga = [[${product.getPrice}]]
       const image = [[${product.getUrlImage}]]
+      const stock = [[${product.getStock}]]
       const jumlah = +$("#jumlah").val()
       if (cart.find(e2=>e2.id == id)) {
         cart = cart.filter(e2=> e2.id != id)
@@ -107,6 +108,7 @@
         nama,
         harga,
         image,
+        stock,
         quantity: jumlah,
       })
       localStorage.setItem("cart", JSON.stringify(cart))

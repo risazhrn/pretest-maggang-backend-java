@@ -9,30 +9,31 @@
   </head>
 <body>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Olshop</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"></i>Home</a>
-            </li>
-            
-            <li class="nav-item">
-              <a class="nav-link" href="#">Product</a>
-            </li>
-          </ul>
-          <ul class="d-flex">
-            <a class="nav-link" href="#">
-            <i class="fa fa-cart-shopping"></i>
-            Keranjang
-          </a>
-          </ul>
-        </div>
+    <div class="container-fluid px-5 py-2">
+      <a class="navbar-brand" th:href="@{/}">Olshop</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/}"></i>Home</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/}">Product</a>
+          </li>
+        </ul>
+        <ul class="d-flex">
+          <a class="nav-link" th:href="@{/cart}">
+          <i class="fa fa-cart-shopping"></i>
+          Keranjang
+        </a>
+        </ul>
       </div>
-    </nav>
+    </div>
+  </nav>
+
     <div class="container">
       <div class="d-flex p-5 gap-5">
         <a th:href="@{'/detail/'+${product.getId}}" th:each="product : ${products}">
@@ -60,6 +61,7 @@
         const nama = data.name
         const harga = data.price
         const image = data.urlImage
+        const stock = data.stock
         if (cart.find(e2=>e2.id == id)) {
           cart = cart.filter(e2=> e2.id != id)
         }
@@ -68,6 +70,7 @@
           nama,
           harga,
           image,
+          stock,
           quantity: 1,
         })
         localStorage.setItem("cart", JSON.stringify(cart))

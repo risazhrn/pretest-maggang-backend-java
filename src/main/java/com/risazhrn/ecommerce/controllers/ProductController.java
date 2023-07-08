@@ -36,4 +36,6 @@ public class ProductController {
         model.addAttribute("product", productService.findOne(id));
         return "detail";
     }
+
+    
 }

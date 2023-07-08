@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid px-5 py-2">
+      <a class="navbar-brand" th:href="@{/}">Olshop</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/}"></i>Home</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/}">Product</a>
+          </li>
+        </ul>
+        <ul class="d-flex">
+          <a class="nav-link" th:href="@{/cart}">
+          <i class="fa fa-cart-shopping"></i>
+          Keranjang
+        </a>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    <div class="container">
+      <h2 class="my-4 fw-bold">Keranjang</h2>
+      
+      <div class="row">
+        <div class="col-8 content">
+          
+        </div>
+        <div class="col" id="content2">
+          
+        </div>
+      </div>
+    </div>
+        
+
+    <script src="/webjars/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
+
+      if (!cart.length) {
+        alert('keranjang anda masih kosong')
+        location.href = "/"
+      }
+      const rupiah = (number)=>{
+        return new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR"
+        }).format(number);
+      }
+
+      let totalBelanja = 0;
+      let totalBarang = 0;
+
+      const initCart = () => {
+        let html = ""
+        cart.forEach(e => {
+        html += `
+        <div class="card my-2" style="width: 100%;">
+            <div class="card-body d-flex gap-2">
+              <img src="${e.image}" class="" alt="..." style="width: 15%;">
+              <div style="width: 100%;">
+                <h5 id="nama" class="card-text">${e.nama}</h5>
+                <h5 id="harga" class="card-text fw-bold">${rupiah(e.harga)}</h5>
+                  <div class="d-flex justify-content-end gap-4 mt-4 ">
+                    <div class="d-flex align-items-center">
+                      <a data-id="${e.id}" href="#" class="btnRemove"><i class="fa fa-trash text-danger"></i></a>
+                    </div>
+                    <div>
+                      <input type="number" class="form-control inputStock" min="1" value="${e.quantity}" th:max="${e.stock}" data-id="${e.id}" />
+                    </div>
+                  </div>
+              </div>
+            </div>
+        </div>`
+        totalBelanja += e.harga*e.quantity
+        totalBarang += e.quantity
+      });
+      $(".content").html(html)
+      $(".btnRemove").click((e)=> {
+        const id = $(e.currentTarget).data('id')
+        cart = cart.filter(e2 => e2.id != id)
+        localStorage.setItem('cart', JSON.stringify(cart))
+        initCart()
+        totalBelanja = 0;
+        totalBarang = 0;
+        cart.forEach(e => {
+          totalBelanja += e.harga*e.quantity
+          totalBarang += e.quantity
+        })
+        $("#content2").html(getHtmlTotal(totalBelanja, totalBarang))
+      })
+      $('.inputStock').change((e) => {
+        const id = $(e.currentTarget).data('id')
+        const cartIndex = cart.findIndex(e2 => e2.id == id)
+        cart[cartIndex].quantity = +$(e.currentTarget).val()
+        localStorage.setItem('cart', JSON.stringify(cart))
+        totalBelanja = 0;
+        totalBarang = 0;
+        cart.forEach(e => {
+          totalBelanja += e.harga*e.quantity
+          totalBarang += e.quantity
+        })
+        $("#content2").html(getHtmlTotal(totalBelanja, totalBarang))
+      })
+      }
+      initCart()
+      const getHtmlTotal = (totalBelanja, totalBarang) => {
+        return `
+        <div class="card my-2" style="width: 100%;">
+            <div class="card-body d-flex gap-2 m-2">
+      
+              <div style="width: 100%;">
+                <h5 class="card-text fw-bold">Ringkasan Belanja</h5>
+                <div class="mt-4 d-flex justify-content-between">
+                <h5 class="card-text">Total Barang</h5>
+                <h5 class="card-text">(${totalBarang} Barang)</h5>
+                </div>
+                <hr/>
+                <div class="d-flex justify-content-between">
+                  <h5 class="card-text fw-bold">Total Harga</h5>
+                <h5 class="card-text fw-bold">${rupiah(totalBelanja)}</h5>
+                </div>
+              </div>
+              
+            </div>
+            
+            <a href="#" id="btnCheckOut" class="m-4 p-2 d-inline btn btn-primary">
+              <h5>Checkout</h5>
+            </a>
+        </div>`;
+      }
+      
+      $("#content2").html(getHtmlTotal(totalBelanja, totalBarang))
+      $("#btnCheckOut").click(() => {
+        if (cart.length){
+          $.ajax({
+            method: 'POST',
+            contentType: 'application/json',
+            url: '/api/checkout',
+            data: JSON.stringify({
+              dataBarang: cart,
+              total: totalBelanja,
+            }),
+            success: (data) => {
+              localStorage.setItem('cart', [])
+              location.href = "/"
+            },
+            error: (err) => {
+              console.log(err)
+            }
+          })
+        } else {
+          alert(" tidak ada data")
+        }
+      })
+    </script>
+ </body>
+</html>
