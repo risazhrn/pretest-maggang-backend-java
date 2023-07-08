@@ -1,4 +1,4 @@
-package com.risazhrn.ecommerce.dao;
+package com.risazhrn.ecommerce.entity;
 
 public class CheckoutDao {
     int total;

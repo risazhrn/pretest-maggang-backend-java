@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.risazhrn.ecommerce.dao.CheckoutDao;
-import com.risazhrn.ecommerce.dao.DataBarang;
+import com.risazhrn.ecommerce.entity.CheckoutDao;
+import com.risazhrn.ecommerce.entity.DataBarang;
 import com.risazhrn.ecommerce.entity.Product;
 import com.risazhrn.ecommerce.entity.ProductTransaction;
 import com.risazhrn.ecommerce.entity.Transaction;

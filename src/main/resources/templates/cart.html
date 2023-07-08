@@ -162,6 +162,7 @@
               total: totalBelanja,
             }),
             success: (data) => {
+              alert("transaksi berhasil")
               localStorage.setItem('cart', [])
               location.href = "/"
             },
